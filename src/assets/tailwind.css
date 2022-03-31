@@ -1,0 +1,23 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;500;700&display=swap');
+
+@layer base {
+    #app{
+        font-family: 'Noto Serif TC', serif;
+    }
+    .main-container{
+        margin-left:240px;
+        width:calc(100% - 240px);
+    }
+    @media(max-width:1024px){
+        .main-container{
+            margin-left:0;
+            width:100%;
+        }
+    }
+}

@@ -1,18 +1,30 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="main flex">
+    <NavMenu ref="nav"/>
+    <router-view></router-view>
   </div>
+  <FooterComponent></FooterComponent>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import NavMenu from '@/components/NavMenu.vue'
+import FooterComponent from '@/components/FooterComponent.vue'
 
 export default {
   name: 'HomeView',
+  data () {
+    return {
+    }
+  },
+  mounted () {
+  },
+  unmounted () {
+  },
+  methods: {
+  },
   components: {
-    HelloWorld
+    NavMenu, FooterComponent
   }
 }
 </script>
