@@ -9,7 +9,9 @@ module.exports = {
     extend: {
       colors: {
         'font-main': '#707070',
-        'brown-dark': '#624D40'
+        'brown-dark': '#624D40',
+        'brown-light': '#907B6E',
+        'brown-lighter': '#E8DFD8'
       }
     }
   },

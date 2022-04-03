@@ -10,9 +10,46 @@
     #app{
         font-family: 'Noto Serif TC', serif;
     }
+    .main{
+        min-height:calc(100vh - 309px);
+    }
     .main-container{
         margin-left:240px;
         width:calc(100% - 240px);
+    }
+    .mainbody-limit{
+        max-width:1160px;
+        margin: 0 auto;
+        @media (max-width:1280px){
+            max-width:900px;
+        }
+    }
+    .product{
+        background: linear-gradient(286.91deg, #FFE9D9 0%, #FFFFFF 100%);
+    }
+    .product-image{
+        padding-bottom: 100%;
+    }
+    .cart-title{
+        position: relative;
+        padding-left:40px;
+        z-index:0;
+    }
+    .cart-title:before{
+        content:'';
+        height:80px;
+        width:1px;
+        background-color: #624D40;
+        position: absolute;
+        top:-80px;
+        left:0;
+    }
+    input:checked ~ .dot {
+        transform: translateX(100%);
+        background-color: #0369a1;
+    }
+    .imglist{
+        height: 500px;
     }
     @media(max-width:1024px){
         .main-container{

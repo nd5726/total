@@ -77,6 +77,9 @@
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
+    @media(max-width:767px){
+      background-attachment:scroll;
+    }
   }
   .mainbody{
     padding: 140px 80px 140px 60px;
@@ -85,13 +88,6 @@
     }
     @media (max-width:641px){
       padding: 60px 30px 60px 30px;
-    }
-  }
-  .mainbody-limit{
-    max-width:1160px;
-    margin: 0 auto;
-    @media (max-width:1280px){
-      max-width:900px;
     }
   }
   .image{

@@ -5,6 +5,6 @@
             <p class="text-white font-sm tracking-wider">copyright</p>
             <img src="../assets/logo_w.png" class="w-[100px]" alt="">
         </div>
-        <a class="text-font-main font-normal tracking-wider border-b border-font-main  text-sm pt-6 text-center" href="">後台管理登入</a>
+        <router-link class="text-font-main font-normal tracking-wider border-b border-font-main  text-sm pt-6 text-center" to="/admin">後台管理登入</router-link>
     </footer>
 </template>
