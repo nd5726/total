@@ -1,10 +1,10 @@
 <template>
     <section class="w-full flex flex-col overflow-x-hidden">
       <div class="banner w-full h-[100vh] lg:pl-[240px]  flex justify-center items-end ">
-        <button class="scroll-down text-white mb-16" type="button">SCROLL DOWN</button>
+        <button @click="Goto" class="scroll-down text-white mb-32" type="button">SCROLL DOWN</button>
       </div>
       <div class="main-container">
-        <div class="mainbody mainbody-limit">
+        <div ref="main" class="mainbody mainbody-limit">
             <div class="flex items-center w-full mb-24 md:mb-8 flex-wrap md:flex-nowrap justify-end md:justify-between ">
               <div class="w-full md:w-4/12">
                 <img class="image" src="../assets/p02.png" alt="">
@@ -112,3 +112,15 @@
     }
   }
 </style>
+
+<script>
+export default {
+  methods: {
+    Goto () {
+      // scroll滑到指定位置
+      const target = this.$refs.main.offsetTop
+      window.scrollTo({ top: target })
+    }
+  }
+}
+</script>
