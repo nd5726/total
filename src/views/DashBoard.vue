@@ -1,10 +1,11 @@
 <template>
   <div class=" fixed w-full top-0 bg-brown-light mb-6 z-20">
     <nav class="flex px-4  text-white py-4 justify-start mx-auto items-center backend container">
-      <div class="text-xl mx-2"><router-link to="/">回到前台</router-link></div>
-      <div class="text-xl mx-2"><router-link to="/admin">後台產品列表</router-link></div>
-      <div class="text-xl mx-2"><router-link to="/admin/orders">訂單列表</router-link></div>
-      <a href="#" class="text-xl mx-2" @click.prevent="logout">登出</a>
+      <div class="text-lg mx-3"><router-link to="/">回到前台</router-link></div>
+      <div class="text-lg mx-3"><router-link to="/admin">後台產品列表</router-link></div>
+      <div class="text-lg mx-3"><router-link to="/admin/orders">訂單列表</router-link></div>
+      <div class="text-lg mx-3"><router-link to="/admin/question">問與答列表</router-link></div>
+      <a href="#" class="text-lg mx-3" @click.prevent="logout">登出</a>
     </nav>
   </div>
   <div class="relative mt-20">

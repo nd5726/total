@@ -7,9 +7,9 @@ import VueAxios from 'vue-axios'
 import { BootstrapIconsPlugin } from 'bootstrap-icons-vue'
 import VueLoading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
+import animate from 'animate.css'
 
-import { formatTime } from './methods/timeFormat'
-
+import { formatTime, formatTimetoTimestamp } from './methods/timeFormat'
 import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate'
 import { localize, setLocale } from '@vee-validate/i18n'
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
@@ -27,9 +27,10 @@ Object.keys(AllRules).forEach((rule) => {
 const app = createApp(App)
 
 app.config.globalProperties.$timeFormat = {
-  formatTime
+  formatTime, formatTimetoTimestamp
 }
 
+app.use(animate)
 app.use(router)
 app.use(BootstrapIconsPlugin)
 app.use(VueAxios, axios)

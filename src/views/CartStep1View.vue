@@ -73,6 +73,8 @@
 </style>
 
 <script>
+import emitter from '@/methods/emitter.js'
+
 export default {
   data () {
     return {
@@ -86,6 +88,7 @@ export default {
         .then((res) => {
           this.cartList = res.data.data
           this.isLoading = false
+          emitter.emit('get-carts')
         })
     },
     removeCartItem (id) {

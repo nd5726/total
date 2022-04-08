@@ -30,6 +30,10 @@ const routes = [
       {
         path: '/cartFinish',
         component: () => import('../views/CartFinishView.vue')
+      },
+      {
+        path: '/question',
+        component: () => import('../views/QuestionView.vue')
       }
     ]
   },
@@ -45,6 +49,10 @@ const routes = [
       {
         path: 'orders',
         component: () => import('../views/Admin/OrdersView.vue')
+      },
+      {
+        path: 'question',
+        component: () => import('../views/Admin/QuestionView.vue')
       }
     ]
   },

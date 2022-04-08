@@ -1,6 +1,6 @@
 <template>
     <div class="product w-full lg:pl-[240px] pt-[150px] lg:pt-8 pb-16">
-        <section class="mainbody-limit px-8 md:px-8 pt-12 ">
+        <section class="mainbody-limit px-8 md:px-8 pt-12">
             <button class="flex items-center  text-brown-dark font-bold py-2 mb-8 transition-all relative left-0 hover:-left-2" @click="$router.go(-1)">
               <img class="mr-4" src="../assets/arrow.png" alt="回上頁">回上頁
             </button>
@@ -12,14 +12,19 @@
 
             <div class="flex item-start justify-between mb-16 flex-wrap">
                 <div class="flex w-full md:w-1/2 pr-0 md:pr-8 flex-shrink-0 flex-col items-stretch mb-8 md:mb-0">
+                  <div class="md:sticky top-10">
                     <div class="w-full" v-if="tempProduct.imageUrl">
-                      <div class="product-image w-full bg-cover" :style="{ backgroundImage:`url( ${ tempProduct.imageUrl } )`}"></div>
-                    </div>
-                    <ul class="w-full mt-4 flex imageslist">
-                        <li v-for="images in tempProduct.imagesUrl" :key="images.id" class="mb-4 w-1/5 pr-2">
-                            <div class="product-image w-full bg-cover" :style="{backgroundImage:`url( ${images} )`}"></div>
-                        </li>
-                    </ul>
+                        <div class="product-image w-full bg-cover" :style="{ backgroundImage:`url( ${ tempProduct.imageUrl } )`}"></div>
+                      </div>
+                      <ul class="w-full mt-4 flex imageslist">
+                          <li class="mb-4 w-1/5 pr-2" v-if="tempProduct.imageUrl">
+                            <div class="product-image w-full bg-cover" :style="{backgroundImage:`url( ${tempProduct.imageUrl} )`}"></div>
+                          </li>
+                          <li v-for="images in tempProduct.imagesUrl" :key="images.id" class="mb-4 w-1/5 pr-2">
+                              <div class="product-image w-full bg-cover" :style="{backgroundImage:`url( ${images} )`}"></div>
+                          </li>
+                      </ul>
+                  </div>
                 </div>
                 <div class="content flex flex-col justify-between p-12 md:p-16 border border-[#707070] w-full md:w-6/12 md:max-w-[500px] ">
                     <div class="">
@@ -68,6 +73,7 @@
 </style>
 
 <script>
+import emitter from '@/methods/emitter.js'
 export default {
   data () {
     return {
@@ -77,7 +83,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.$route)
     this.getProducts()
   },
   methods: {
@@ -109,6 +114,7 @@ export default {
           console.log(res)
           alert(res.data.message)
           this.isLoading = false
+          emitter.emit('get-carts')
         })
         .catch((err) => {
           console.log(err)
