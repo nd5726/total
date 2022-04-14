@@ -78,7 +78,7 @@ export default {
     tempArticle () {
       this.temp = {
         ...this.tempArticle,
-        tag: this.tempArticle.tag || ['']
+        tag: this.tempArticle.tag || []
       }
       console.log(this.temp)
     }
