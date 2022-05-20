@@ -34,10 +34,12 @@ app.config.globalProperties.$timeFormat = {
   formatTime, formatTimetoTimestamp
 }
 
+app.use(VueAxios, axios)
+app.provide('axios', app.config.globalProperties.axios)
+
 app.use(animate)
 app.use(router)
 app.use(BootstrapIconsPlugin)
-app.use(VueAxios, axios)
 app.component('VField', Field)
 app.component('VForm', Form)
 app.component('ErrorMessage', ErrorMessage)

@@ -74,53 +74,61 @@
 
 <script>
 import emitter from '@/methods/emitter.js'
+import { ref, inject, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 export default {
-  data () {
-    return {
-      tempProduct: [],
-      qty: 1,
-      isLoading: true
+  setup () {
+    const axios = inject('axios')
+    const tempProduct = ref([])
+    const qty = ref(1)
+    const isLoading = ref(true)
+    const route = useRoute()
+
+    const getProducts = async () => {
+      try {
+        const { id } = route.params
+        const res = await axios.get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/product/${id}`)
+        tempProduct.value = res.data.product
+      } catch (err) {
+        console.log(err)
+      }
+      isLoading.value = false
     }
-  },
-  mounted () {
-    this.getProducts()
-  },
-  methods: {
-    getProducts () {
-      const { id } = this.$route.params
-      this.$http.get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/product/${id}`)
-        .then(res => {
-          this.tempProduct = res.data.product
-          this.isLoading = false
-        })
-    },
-    numberCheck () {
-      if (this.qty <= 0 || this.qty > 10) {
+
+    function numberCheck () {
+      if (qty.value <= 0 || qty.value > 10) {
         alert('數量不得小於1，最大購買數量為10')
-        this.qty = 1
+        qty.value = 1
         return false
       } else {
         return true
       }
-    },
-    addtoCart (id, qty = 1) {
-      if (this.numberCheck()) {
-        this.isLoading = true
+    }
+
+    async function addtoCart (id, qty = 1) {
+      if (numberCheck()) {
+        isLoading.value = true
         const data = {
           product_id: id,
           qty: qty
         }
-        this.$http.post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`, { data })
-          .then((res) => {
-            console.log(res)
-            alert(res.data.message)
-            this.isLoading = false
-            emitter.emit('get-carts')
-          })
-          .catch((err) => {
-            console.log(err)
-          })
+        try {
+          const res = await axios.post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`, { data })
+          alert(res.data.message)
+          emitter.emit('get-carts')
+        } catch (err) {
+          console.log(err)
+        }
+        isLoading.value = false
       }
+    }
+
+    onMounted(() => {
+      getProducts()
+    })
+
+    return {
+      tempProduct, isLoading, numberCheck, qty, addtoCart
     }
   }
 }

@@ -19,7 +19,7 @@
                 </li>
             </ul>
             <ul class="flex flex-wrap">
-                <li data-wow-delay="1s" v-for="product in products" :key="product.id" class="w-1/2 sm:w-4/12 xl:w-3/12 p-2 sm:p-4 mb-6 sm:mb-8 wow animate__animated animate__fadeInUp">
+                <li v-for="product in products.data" :key="product.id" class="w-1/2 sm:w-4/12 xl:w-3/12 p-2 sm:p-4 mb-6 sm:mb-8 ori" :class="{'fade': loadedd }">
                     <router-link class="hvr-outline-in flex" :to="`/product/${product.id}`">
                         <div class="product-image w-full bg-cover" :style="{backgroundImage:`url( ${product.imageUrl} )`}"></div>
                     </router-link>
@@ -68,36 +68,54 @@
       background-color: #624d40;
       color:#fff;
     }
+    .ori{
+      opacity: 0;
+      transition: all linear 0.3s;
+    }
+    .fade{
+      opacity: 1;
+    }
 </style>
 
 <script>
-import { WOW } from 'wowjs'
+// import { WOW } from 'wowjs'
+import { ref, onMounted, reactive, watchEffect, inject } from 'vue'
+import { useRoute } from 'vue-router'
 export default {
-  data () {
+  setup () {
+    const axios = inject('axios')
+    const route = useRoute()
+    const products = reactive({ data: [] })
+    const isLoading = ref(false)
+    const category = ref(route.query.category ?? '')
+    const loadedd = ref(false)
+
+    const getproduct = async (category = '') => {
+      isLoading.value = true
+      loadedd.value = false
+      try {
+        const res = await axios.get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products/?category=${category}`)
+        products.data = res.data.products
+      } catch (err) {
+        console.log(err)
+      }
+      isLoading.value = false
+      setTimeout(() => {
+        loadedd.value = true
+      }, '100')
+    }
+
+    onMounted(() => {
+      getproduct(category.value)
+    })
+
+    watchEffect(() => {
+      category.value = route.query.category ?? ''
+      getproduct(category.value)
+    })
+
     return {
-      products: [],
-      isLoading: false,
-      category: this.$route.query.category ?? ''
-    }
-  },
-  mounted () {
-    this.getproduct(this.category)
-    new WOW({ live: false }).init()
-  },
-  watch: {
-    '$route.query.category': function () {
-      this.getproduct(this.$route.query.category)
-      this.category = this.$route.query.category ?? ''
-    }
-  },
-  methods: {
-    getproduct (category = '') {
-      this.isLoading = true
-      this.$http.get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products/?category=${category}`)
-        .then((res) => {
-          this.products = res.data.products
-          this.isLoading = false
-        })
+      category, products, isLoading, loadedd
     }
   }
 }
