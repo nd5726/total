@@ -19,7 +19,7 @@
                 </li>
             </ul>
             <ul class="flex flex-wrap">
-                <li v-for="product in products" :key="product.id" class="w-1/2 sm:w-4/12 xl:w-3/12 p-2 sm:p-4 mb-6 sm:mb-8">
+                <li data-wow-delay="1s" v-for="product in products" :key="product.id" class="w-1/2 sm:w-4/12 xl:w-3/12 p-2 sm:p-4 mb-6 sm:mb-8 wow animate__animated animate__fadeInUp">
                     <router-link class="hvr-outline-in flex" :to="`/product/${product.id}`">
                         <div class="product-image w-full bg-cover" :style="{backgroundImage:`url( ${product.imageUrl} )`}"></div>
                     </router-link>
@@ -71,6 +71,7 @@
 </style>
 
 <script>
+import { WOW } from 'wowjs'
 export default {
   data () {
     return {
@@ -81,6 +82,7 @@ export default {
   },
   mounted () {
     this.getproduct(this.category)
+    new WOW({ live: false }).init()
   },
   watch: {
     '$route.query.category': function () {

@@ -89,6 +89,11 @@ export default {
           this.cartList = res.data.data
           this.isLoading = false
           emitter.emit('get-carts')
+
+          if (this.cartList.carts.length === 0) {
+            alert('購物車無商品，請前往選購')
+            this.$router.push('/product')
+          }
         })
     },
     removeCartItem (id) {

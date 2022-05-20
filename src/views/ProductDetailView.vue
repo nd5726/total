@@ -38,7 +38,7 @@
                     </div>
                     <div class="flex flex-col mt-24 md:mt-8">
                         <div class="flex items-center mb-8">
-                          <label class="mr-2 text-[#707070] " for="cart_number">選擇數量 :</label><input id="cart_number" @change="numberCheck()" type="number" min="1" max="10" v-model="qty" class="w-28 p-2 border border-[#707070] rounded-none bg-transparent appearance-none text-center">
+                          <label class="mr-2 text-[#707070] " for="cart_number">選擇數量 :</label><input id="cart_number" type="number" min="1" max="10" v-model="qty" class="w-28 p-2 border border-[#707070] rounded-none bg-transparent appearance-none text-center">
                         </div>
                         <button type="button" @click="addtoCart(tempProduct.id,qty)" class="w-full text-lg  border border-[#707070] text-[#707070] py-3 transition-all hover:bg-[#707070] hover:text-white relative top-0 left-0 cursor-pointer hover:-top-1 hover:-left-1" >加入購物車</button>
                     </div>
@@ -49,7 +49,7 @@
     <VLoading :active="isLoading"></VLoading>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .content{
       position:relative;
       z-index:200;
@@ -95,30 +95,32 @@ export default {
         })
     },
     numberCheck () {
-      if (this.qty <= 0) {
-        alert('數量不得小於1')
+      if (this.qty <= 0 || this.qty > 10) {
+        alert('數量不得小於1，最大購買數量為10')
         this.qty = 1
+        return false
+      } else {
+        return true
       }
     },
     addtoCart (id, qty = 1) {
-      if (qty < 1) {
-        qty = 1
+      if (this.numberCheck()) {
+        this.isLoading = true
+        const data = {
+          product_id: id,
+          qty: qty
+        }
+        this.$http.post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`, { data })
+          .then((res) => {
+            console.log(res)
+            alert(res.data.message)
+            this.isLoading = false
+            emitter.emit('get-carts')
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       }
-      this.isLoading = true
-      const data = {
-        product_id: id,
-        qty: qty
-      }
-      this.$http.post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`, { data })
-        .then((res) => {
-          console.log(res)
-          alert(res.data.message)
-          this.isLoading = false
-          emitter.emit('get-carts')
-        })
-        .catch((err) => {
-          console.log(err)
-        })
     }
   }
 }

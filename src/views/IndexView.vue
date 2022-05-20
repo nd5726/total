@@ -1,6 +1,6 @@
 <template>
     <section class="w-full flex flex-col overflow-x-hidden">
-      <div class="banner w-full h-[100vh] lg:pl-[240px]  flex justify-center items-end z-0 wow animate__animated animate__fadeIn">
+      <div class="banner w-full h-[100vh] lg:pl-[240px] invisible  flex justify-center items-end z-0 wow animate__animated animate__fadeIn">
         <button @click="Goto" class="scroll-down text-white mb-32" type="button">SCROLL DOWN</button>
       </div>
       <div class="main-container">
@@ -124,7 +124,9 @@ export default {
     }
   },
   mounted () {
-    new WOW({ live: false }).init()
+    this.$nextTick(() => {
+      new WOW({ live: false }).init()
+    })
   }
 }
 </script>

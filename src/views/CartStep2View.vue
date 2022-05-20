@@ -97,6 +97,7 @@
 </style>
 
 <script>
+import emitter from '@/methods/emitter.js'
 export default {
   data () {
     return {
@@ -128,7 +129,7 @@ export default {
         .then((res) => {
           alert(res.data.message)
           this.$refs.cartForm.resetForm()
-          this.getcarts()
+          emitter.emit('get-carts')
           this.$router.push('/cartFinish')
         })
     }
